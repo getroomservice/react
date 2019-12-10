@@ -1,0 +1,28 @@
+{
+  "name": "@roomservice/react",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "yarn build"
+  },
+  "dependencies": {
+    "automerge": "^0.12.1",
+    "invariant": "^2.2.4",
+    "ky": "^0.16.1",
+    "ky-universal": "^0.3.0",
+    "safe-json-stringify": "^1.2.0",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/invariant": "^2.2.30",
+    "@types/react": "^16.9.16",
+    "@types/safe-json-stringify": "^1.1.0",
+    "@types/socket.io-client": "^1.4.32"
+  },
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDirs": ["./src"],
+    "strict": true,
+    "jsx": "preserve",
+    "target": "es2017",
+    "typeRoots": ["./node_modules/@types"]
+  },
+  "include": ["./src/**/*"]
+}

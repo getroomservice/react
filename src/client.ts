@@ -3,7 +3,7 @@ import invariant from "invariant";
 import safeJsonStringify from "safe-json-stringify";
 import authorize from "./authorize";
 import { ROOM_SERICE_SOCKET_URL } from "./core";
-import Socket from "./socket";
+import Sockets from "./socket";
 
 interface RoomValue {
   reference: string;
@@ -19,10 +19,10 @@ const isEmptyObj = (obj: any) =>
   Object.entries(obj).length === 0 && obj.constructor === Object;
 
 export class RoomClient<T extends KeyValueObject> {
-  private _socket: Socket;
+  private _socket: SocketIOClient.Socket;
   private _reference: string;
 
-  constructor(socket: Socket, reference: string) {
+  constructor(socket: SocketIOClient.Socket, reference: string) {
     invariant(socket, "Expected a socket client to be defined");
 
     this._socket = socket;
@@ -90,7 +90,7 @@ export default class RoomServiceClient {
     );
 
     return new RoomClient<T>(
-      new Socket(ROOM_SERICE_SOCKET_URL, {
+      Sockets.newSocket(ROOM_SERICE_SOCKET_URL, {
         transportOptions: {
           polling: {
             extraHeaders: {

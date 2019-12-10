@@ -5,19 +5,22 @@
 import IO from "socket.io-client";
 
 // Namespaced so we can mock stuff
-class Socket {
-  private readonly _socket: SocketIOClient.Socket;
-  constructor(url: string, opts: SocketIOClient.ConnectOpts) {
-    this._socket = IO(url, opts);
-  }
+const Sockets = {
+  newSocket(url: string, opts: SocketIOClient.ConnectOpts) {
+    return IO(url, opts);
+  },
 
-  on(event: "connect" | "disconnect" | "update_room", fn: Function) {
-    this._socket.on(event, fn);
-  }
+  on(
+    socket: SocketIOClient.Socket,
+    event: "connect" | "disconnect" | "update_room",
+    fn: Function
+  ) {
+    socket.on(event, fn);
+  },
 
-  emit(event: "update_room", ...args: any[]) {
-    this._socket.emit(event, ...args);
+  emit(socket: SocketIOClient.Socket, event: "update_room", ...args: any[]) {
+    socket.emit(event, ...args);
   }
-}
+};
 
-export default Socket;
+export default Sockets;

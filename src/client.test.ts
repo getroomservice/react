@@ -83,7 +83,6 @@ describe("RoomServiceClient", () => {
     expect(event).toBe("update_room");
 
     const params = JSON.parse(str);
-    expect(params.reference).toBe("my-room");
     expect(typeof params.state.data).toBe("string");
     // @ts-ignore argle bargle ts plz, just believe me, I am thy programmer
     expect(Automerge.load(params.state.data).someOption).toBe("hello!");

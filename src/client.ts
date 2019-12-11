@@ -3,12 +3,12 @@ import invariant from "invariant";
 import safeJsonStringify from "safe-json-stringify";
 import authorize from "./authorize";
 import { ROOM_SERICE_SOCKET_URL } from "./core";
-import Offline from "./offline";
 import Sockets from "./socket";
 import { KeyValueObject } from "./types";
 
 interface RoomValue {
-  reference: string;
+  // Note this MUST be the id, not the reference.
+  id: string;
   state: {
     data: string;
   };
@@ -27,6 +27,7 @@ const isEmptyObj = (obj: any) =>
 
 export class RoomClient<T extends KeyValueObject> {
   private _socket?: SocketIOClient.Socket;
+  private _roomId?: string;
   private readonly _reference: string;
   private readonly _authorizationUrl: string;
 
@@ -45,6 +46,7 @@ export class RoomClient<T extends KeyValueObject> {
       this._reference
     );
 
+    this._roomId = room.id;
     this._socket = Sockets.newSocket(ROOM_SERICE_SOCKET_URL, {
       transportOptions: {
         polling: {
@@ -76,12 +78,12 @@ export class RoomClient<T extends KeyValueObject> {
      * changes.
      */
 
-    const data = await Offline.get(this._reference);
-    if (data) {
-      const room: RoomValue = fromRoomStr(data as string);
-      console.log(room);
-      Sockets.emit(this._socket, "update_room", asRoomStr(room));
-    }
+    // TODO Offline
+    // const data = await Offline.get(this._reference);
+    // if (data) {
+    //   const room: RoomValue = fromRoomStr(data as string);
+    //   Sockets.emit(this._socket, "update_room", asRoomStr(room));
+    // }
   }
 
   disconnect() {
@@ -97,11 +99,16 @@ export class RoomClient<T extends KeyValueObject> {
     );
 
     const socketCallback = (data: string) => {
-      const { reference, state } = JSON.parse(data) as RoomValue;
+      const { id, state } = JSON.parse(data) as RoomValue;
+
+      invariant(
+        this._roomId,
+        "Expected a _roomId to be defined before we invoked the the onUpdate callback. This is a sign of a broken client, please contact us if you're seeing this."
+      );
 
       // This socket event will fire for ALL rooms, so we need to check
       // if this callback refers to this particular room.
-      if (reference !== this._reference) {
+      if (id !== this._roomId) {
         return;
       }
 
@@ -112,7 +119,11 @@ export class RoomClient<T extends KeyValueObject> {
       }
 
       // Merge! :D
-      const newDoc = Automerge.merge(current, Automerge.load(state.data));
+      const newDoc = Automerge.merge(
+        current || Automerge.init(),
+        Automerge.load(state.data)
+      );
+      console.log(newDoc);
       callback(newDoc as Readonly<T>);
     };
 
@@ -153,17 +164,21 @@ export class RoomClient<T extends KeyValueObject> {
 
     const newDoc = Automerge.change(doc, callback);
 
-    const room: RoomValue = {
-      reference: this._reference,
-      state: {
-        data: Automerge.save(newDoc)
-      }
-    };
-
-    const asStr = asRoomStr(room);
-    Offline.set(room.reference, asStr);
+    // Offline.set(room.reference, asStr); // TODO OFFLINE
     if (this._socket) {
-      Sockets.emit(this._socket, "update_room", asStr);
+      invariant(
+        this._roomId,
+        "Expected a _roomId to exist when publishing. This is a sign of a broken client, if you're seeing this, please contact us."
+      );
+
+      const room: RoomValue = {
+        id: this._roomId as string,
+        state: {
+          data: Automerge.save(newDoc)
+        }
+      };
+
+      Sockets.emit(this._socket, "update_room", asRoomStr(room));
     }
 
     return newDoc;

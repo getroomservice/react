@@ -4,6 +4,7 @@ import safeJsonStringify from "safe-json-stringify";
 import authorize from "./authorize";
 import { ROOM_SERICE_SOCKET_URL } from "./core";
 import Sockets from "./socket";
+import { KeyValueObject } from "./types";
 
 interface RoomValue {
   reference: string;
@@ -11,9 +12,6 @@ interface RoomValue {
     data: string;
   };
 }
-
-// What you'd think an object is, not what typescript thinks an object is.
-type KeyValueObject = { [key: string]: any };
 
 const isEmptyObj = (obj: any) =>
   Object.entries(obj).length === 0 && obj.constructor === Object;
@@ -73,6 +71,7 @@ export class RoomClient<T extends KeyValueObject> {
     };
 
     this._socket.emit("update_room", safeJsonStringify(room));
+    return newDoc;
   }
 }
 

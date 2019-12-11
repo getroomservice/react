@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import RoomServiceClient, { RoomClient } from "./client";
+import { KeyValueObject } from "./types";
 
-export function useRoomService<T extends object>(
+export function useRoomService<T extends KeyValueObject>(
   client: RoomServiceClient,
   roomReference: string
-) {
-  const [state, setState] = useState<T>();
+): [T, (cb: (state: T) => void) => void, boolean] {
+  const [state, setState] = useState<T>({} as T);
   const [room, setRoom] = useState<RoomClient<T>>();
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
@@ -27,12 +28,16 @@ export function useRoomService<T extends object>(
   }
 
   function publish(callback: (state: T) => void) {
+    // optimisticly render this to make things snappy
+
     // TODO, write to offline here
     if (!room) {
+      console.log("no room defined");
       return;
     }
 
-    room.publish(state || ({} as T), callback);
+    const newDoc = room.publish(state || ({} as T), callback);
+    setState(newDoc);
   }
 
   useEffect(() => {

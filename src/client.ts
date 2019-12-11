@@ -3,6 +3,7 @@ import invariant from "invariant";
 import safeJsonStringify from "safe-json-stringify";
 import authorize from "./authorize";
 import { ROOM_SERICE_SOCKET_URL } from "./core";
+import Offline from "./offline";
 import Sockets from "./socket";
 import { KeyValueObject } from "./types";
 
@@ -11,6 +12,14 @@ interface RoomValue {
   state: {
     data: string;
   };
+}
+
+function fromRoomStr(roomStr: string) {
+  return JSON.parse(roomStr) as RoomValue;
+}
+
+function asRoomStr(room: RoomValue) {
+  return safeJsonStringify(room);
 }
 
 const isEmptyObj = (obj: any) =>
@@ -30,7 +39,7 @@ export class RoomClient<T extends KeyValueObject> {
     this._authorizationUrl = authorizationUrl;
   }
 
-  async connect(localDoc?: T) {
+  async connect() {
     const { room, session } = await authorize(
       this._authorizationUrl,
       this._reference
@@ -66,15 +75,12 @@ export class RoomClient<T extends KeyValueObject> {
      * actually connected to the client. So we should push up their
      * changes.
      */
-    if (localDoc) {
-      const room: RoomValue = {
-        reference: this._reference,
-        state: {
-          data: Automerge.save(localDoc)
-        }
-      };
 
-      Sockets.emit(this._socket, "update_room", safeJsonStringify(room));
+    const data = await Offline.get(this._reference);
+    if (data) {
+      const room: RoomValue = fromRoomStr(data as string);
+      console.log(room);
+      Sockets.emit(this._socket, "update_room", asRoomStr(room));
     }
   }
 
@@ -154,9 +160,10 @@ export class RoomClient<T extends KeyValueObject> {
       }
     };
 
-    // TODO: save to offline
+    const asStr = asRoomStr(room);
+    Offline.set(room.reference, asStr);
     if (this._socket) {
-      Sockets.emit(this._socket, "update_room", safeJsonStringify(room));
+      Sockets.emit(this._socket, "update_room", asStr);
     }
 
     return newDoc;

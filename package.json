@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "automerge": "^0.12.1",
+    "idb-keyval": "^3.2.0",
     "invariant": "^2.2.4",
     "ky": "^0.16.1",
     "ky-universal": "^0.3.0",

@@ -4,6 +4,7 @@ import RoomServiceClient from "./client";
 import Sockets from "./socket";
 
 const URL = "https://coolsite.com";
+jest.mock("idb-keyval");
 
 function mockAuthEndpoint() {
   return nock(URL)

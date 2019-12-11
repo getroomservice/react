@@ -1,47 +1,44 @@
 import { useEffect, useState } from "react";
-import RoomServiceClient, { RoomClient } from "./client";
+import RoomServiceClient from "./client";
 import { KeyValueObject } from "./types";
 
 export function useRoomService<T extends KeyValueObject>(
   client: RoomServiceClient,
   roomReference: string
 ): [T, (cb: (state: T) => void) => void, boolean] {
+  const room = client.room<T>(roomReference);
   const [state, setState] = useState<T>({} as T);
-  const [room, setRoom] = useState<RoomClient<T>>();
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   async function load() {
-    const r = await client.room<T>(roomReference);
-    setRoom(r);
-
-    r.onConnect(() => {
+    room.onConnect(() => {
       setIsConnected(true);
     });
 
-    r.onDisconnect(() => {
+    room.onDisconnect(() => {
       setIsConnected(false);
     });
 
-    r.onUpdate(state => {
-      setState(state);
+    room.onUpdate(state, newState => {
+      setState(newState);
     });
+
+    await room.connect();
   }
 
   function publish(callback: (state: T) => void) {
-    // optimisticly render this to make things snappy
-
-    // TODO, write to offline here
-    if (!room) {
-      console.log("no room defined");
-      return;
-    }
-
     const newDoc = room.publish(state || ({} as T), callback);
     setState(newDoc);
   }
 
   useEffect(() => {
     load();
+
+    return function cleanup() {
+      if (room) {
+        room.disconnect();
+      }
+    };
   }, [roomReference]);
 
   return [state, publish, isConnected];

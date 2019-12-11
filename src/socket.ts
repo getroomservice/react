@@ -20,6 +20,10 @@ const Sockets = {
 
   emit(socket: SocketIOClient.Socket, event: "update_room", ...args: any[]) {
     socket.emit(event, ...args);
+  },
+
+  disconnect(socket: SocketIOClient.Socket) {
+    socket.disconnect();
   }
 };
 

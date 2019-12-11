@@ -28,7 +28,9 @@ describe("RoomServiceClient", () => {
 
   it("should call the authorization endpoint when creating a room", async () => {
     const client = new RoomServiceClient(URL + "/api/roomservice");
-    await client.room("my-room");
+    const room = client.room("my-room");
+
+    await room.connect();
 
     expect(scope.isDone()).toBeTruthy();
   });
@@ -42,7 +44,8 @@ describe("RoomServiceClient", () => {
       }).mock;
 
     const client = new RoomServiceClient(URL + "/api/roomservice");
-    await client.room("my-room");
+    const room = client.room("my-room");
+    await room.connect();
     const [url, args] = mock.calls[0];
 
     expect(url).toBe("https://api.roomservice.dev");
@@ -68,7 +71,8 @@ describe("RoomServiceClient", () => {
       });
 
     const client = new RoomServiceClient(URL + "/api/roomservice");
-    const room = await client.room("my-room");
+    const room = client.room("my-room");
+    await room.connect();
 
     room.publish({}, prevState => {
       prevState.someOption = "hello!";

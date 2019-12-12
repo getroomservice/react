@@ -9,13 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "automerge": "^0.12.1",
-    "idb-keyval": "^3.2.0",
     "invariant": "^2.2.4",
-    "ky": "^0.16.1",
-    "ky-universal": "^0.3.0",
-    "safe-json-stringify": "^1.2.0",
-    "socket.io-client": "^2.3.0",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
@@ -32,11 +26,13 @@
     "react-dom": "^16.12.0",
     "react-test-renderer": "^16.12.0",
     "ts-jest": "^24.2.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "@roomservice/browser": "^0.0.4"
   },
   "peerDependencies": {
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "@roomservice/browser": "^0.0.4"
   },
   "files": [
     "/dist"

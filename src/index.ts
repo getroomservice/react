@@ -1,5 +1,5 @@
+import RoomServiceClient from "@roomservice/browser";
 import { useEffect, useState } from "react";
-import RoomServiceClient from "./client";
 import { KeyValueObject } from "./types";
 
 export function useRoomService<T extends KeyValueObject>(

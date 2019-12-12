@@ -1,9 +1,7 @@
+import RoomServiceClient from "@roomservice/browser";
 import { act, renderHook } from "@testing-library/react-hooks";
-import RoomServiceClient from "./client";
 import { useRoomService } from "./index";
 import { DUMMY_PATH, DUMMY_URL, mockAuthEndpoint } from "./test-util";
-
-jest.mock("idb-keyval");
 
 test("should call connect and publish", async () => {
   jest.mock("socket.io-client");

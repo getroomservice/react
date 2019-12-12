@@ -293,6 +293,19 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@roomservice/browser@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.0.4.tgz#e26a44c135887f59e2ea6392aea5ab421990a48d"
+  integrity sha512-kyvXi0oBl+FN1UbhFhR1cjoV/duAsg+A+gcv6eVgH4SGNERefL2t7e4bTUo/R+5KQYizpOfB20IPObi8z1SFXA==
+  dependencies:
+    automerge "^0.12.1"
+    idb-keyval "^3.2.0"
+    invariant "^2.2.4"
+    ky "^0.16.1"
+    ky-universal "^0.3.0"
+    safe-json-stringify "^1.2.0"
+    socket.io-client "^2.3.0"
+
 "@testing-library/react-hooks@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@testing-library/react-hooks/-/react-hooks-3.2.1.tgz#19b6caa048ef15faa69d439c469033873ea01294"

@@ -9,7 +9,7 @@ test("should call connect and publish", async () => {
   const client = new RoomServiceClient(DUMMY_URL + DUMMY_PATH);
 
   const connect = jest.fn();
-  const publish = jest.fn();
+  const publishState = jest.fn();
 
   // @ts-ignore because we're doing deep mocking magic and typescript
   // is justifiably horrified at our behavior
@@ -24,8 +24,8 @@ test("should call connect and publish", async () => {
       onUpdate() {}
       onConnect() {}
       onDisconnect() {}
-      publish(...args: any[]) {
-        publish(...args);
+      publishState(...args: any[]) {
+        publishState(...args);
       }
     })();
   });
@@ -44,7 +44,7 @@ test("should call connect and publish", async () => {
 
   // We've mocked the function, so the only value is checking
   // if it got called
-  expect(publish.mock.calls.length).toBe(1);
+  expect(publishState.mock.calls.length).toBe(1);
 
   // Wait to see if we'll connect
   await wait(() => connect.mock.calls.length === 1, {

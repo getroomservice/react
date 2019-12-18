@@ -19,15 +19,15 @@ export function useRoomService<T extends KeyValueObject>(
       setIsConnected(false);
     });
 
-    room.onUpdate(state, newState => {
+    room.onUpdate(newState => {
       setState(newState);
     });
 
     await room.connect();
   }
 
-  function publish(callback: (state: T) => void) {
-    const newDoc = room.publish(state || ({} as T), callback);
+  function publishState(callback: (state: T) => void) {
+    const newDoc = room.publishState(callback);
     setState(newDoc);
   }
 
@@ -41,5 +41,5 @@ export function useRoomService<T extends KeyValueObject>(
     };
   }, [roomReference]);
 
-  return [state, publish, isConnected];
+  return [state, publishState, isConnected];
 }

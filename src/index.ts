@@ -6,27 +6,36 @@ export function useRoomService<T extends KeyValueObject>(
   client: RoomServiceClient,
   roomReference: string
 ): [T, (cb: (state: T) => void) => void, boolean] {
-  const room = client.room<T>(roomReference);
+  const [room, setRoom] = useState();
   const [state, setState] = useState<T>({} as T);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   async function load() {
-    room.onConnect(() => {
+    const r = client.room<T>(roomReference);
+    setRoom(r);
+
+    r.onConnect(() => {
       setIsConnected(true);
     });
 
-    room.onDisconnect(() => {
+    r.onDisconnect(() => {
       setIsConnected(false);
     });
 
-    room.onUpdate(newState => {
+    r.onUpdate(newState => {
       setState(newState);
     });
 
-    await room.connect();
+    await r.connect();
   }
 
   function publishState(callback: (state: T) => void) {
+    // It's technically possible to call this before it gets set,
+    // but we'll just ignore that quirk for now.
+    if (!room) {
+      return;
+    }
+
     const newDoc = room.publishState(callback);
     setState(newDoc);
   }

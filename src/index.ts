@@ -26,7 +26,8 @@ export function useRoomService<T extends KeyValueObject>(
       setState(newState);
     });
 
-    await r.connect();
+    const { state } = await r.connect();
+    setState(state);
   }
 
   function publishState(callback: (state: T) => void) {

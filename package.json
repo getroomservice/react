@@ -13,7 +13,7 @@
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@roomservice/browser": "^0.0.9",
+    "@roomservice/browser": "^0.0.13",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/invariant": "^2.2.30",
     "@types/jest": "^24.0.23",
@@ -30,7 +30,7 @@
     "typescript": "^3.7.3"
   },
   "peerDependencies": {
-    "@roomservice/browser": "^0.0.9",
+    "@roomservice/browser": "^0.0.13",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

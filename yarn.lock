@@ -293,16 +293,17 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@roomservice/browser@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.0.9.tgz#88ffe55a8537fbfaf72e2c16121b648927b3845b"
-  integrity sha512-yXSXQfwzvda9uANQ1BF80/lUHEhDL2wnwjd3Qy8tiDkdlUmLo2pw1hmJgn/W46WeUqM3pponi81yv9er2FRLag==
+"@roomservice/browser@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.0.13.tgz#e5ccce45e8942f31f833718fb188cfd828e25311"
+  integrity sha512-bY+52eR5u2iHNEwUBYri9iUm21mex5H0OhIncVy41gRfoOsm1uqSKW+FgL6XJ83WGLEpnjLo2paX3Fe2w+Ck1Q==
   dependencies:
     automerge "^0.12.1"
     idb-keyval "^3.2.0"
     invariant "^2.2.4"
     ky "^0.16.1"
     ky-universal "^0.3.0"
+    lodash "^4.17.15"
     safe-json-stringify "^1.2.0"
     socket.io-client "^2.3.0"
 

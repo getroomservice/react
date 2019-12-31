@@ -26,6 +26,12 @@ export function useRoomService<T extends KeyValueObject>(
       setState(newState);
     });
 
+    // restore from offline cache
+    // (this has an await but it's real quick)
+    const offlineState = await r.restore();
+    setState(offlineState);
+
+    // attempt to connect online
     const { state } = await r.connect();
     setState(state);
   }

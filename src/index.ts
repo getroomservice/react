@@ -22,7 +22,7 @@ export function useRoomService<T extends KeyValueObject>(
       setIsConnected(false);
     });
 
-    r.onUpdate(newState => {
+    r.onUpdateDoc(newState => {
       setState(newState);
     });
 
@@ -32,8 +32,8 @@ export function useRoomService<T extends KeyValueObject>(
     setState(offlineState);
 
     // attempt to connect online
-    const { state } = await r.connect();
-    setState(state);
+    const { doc } = await r.init();
+    setState(doc);
   }
 
   function publishState(callback: (state: T) => void) {
@@ -43,8 +43,8 @@ export function useRoomService<T extends KeyValueObject>(
       return;
     }
 
-    const newDoc = room.publishState(callback);
-    setState(newDoc);
+    const state = room.publishDoc(callback);
+    setState(state);
   }
 
   useEffect(() => {

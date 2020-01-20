@@ -6,7 +6,9 @@ import { DUMMY_PATH, DUMMY_URL, mockAuthEndpoint } from "./test-util";
 test("should call connect and publish", async () => {
   jest.mock("socket.io-client");
   mockAuthEndpoint();
-  const client = new RoomServiceClient(DUMMY_URL + DUMMY_PATH);
+  const client = new RoomServiceClient({
+    authUrl: DUMMY_URL + DUMMY_PATH
+  });
 
   const connect = jest.fn();
   const publishState = jest.fn();
@@ -17,14 +19,16 @@ test("should call connect and publish", async () => {
     // Mock room class
     return new (class {
       constructor() {}
-      async connect(...args: any[]) {
+      async init(...args: any[]) {
         connect(...args);
+        return { doc: {} };
       }
       disconnect() {}
-      onUpdate() {}
+      onUpdateDoc() {}
       onConnect() {}
       onDisconnect() {}
-      publishState(...args: any[]) {
+      restore() {}
+      publishDoc(...args: any[]) {
         publishState(...args);
       }
     })();

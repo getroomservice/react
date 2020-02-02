@@ -4,14 +4,15 @@ import { KeyValueObject } from "./types";
 
 export function useRoomService<T extends KeyValueObject>(
   client: RoomServiceClient,
-  roomReference: string
+  roomReference: string,
+  defaultState?: T
 ): [T, (cb: (state: T) => void) => void, boolean] {
   const [room, setRoom] = useState();
-  const [state, setState] = useState<T>({} as T);
+  const [state, setState] = useState<T>((defaultState || {}) as T);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   async function load() {
-    const r = client.room<T>(roomReference);
+    const r = client.room<T>(roomReference, defaultState);
     setRoom(r);
 
     r.onConnect(() => {

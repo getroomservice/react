@@ -1,5 +1,6 @@
 import RoomServiceClient from "@roomservice/browser";
 import { act, renderHook } from "@testing-library/react-hooks";
+import { useSharedState } from "./index";
 import { DUMMY_PATH, DUMMY_URL, mockAuthEndpoint } from "./test-util";
 
 test("should call connect and publish", async () => {

@@ -40,7 +40,7 @@ test("should call connect and publish", async () => {
   // we're connected?
   act(() => {
     const [_, setState] = result.current;
-    setState(prevState => {
+    setState((prevState: any) => {
       prevState.value = "literally anything";
     });
   });

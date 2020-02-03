@@ -42,7 +42,7 @@ function MyComponent() {
 }
 ```
 
-## Rules
+## Rules 
 
 **Rule 1: only use a function parameter.** Unlike the regular `setState`, `setSharedState` _only_ supports a function as an argument, not an object.
 

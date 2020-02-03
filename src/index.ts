@@ -2,7 +2,7 @@ import RoomServiceClient from "@roomservice/browser";
 import { useEffect, useState } from "react";
 import { KeyValueObject } from "./types";
 
-export function useRoomService<T extends KeyValueObject>(
+export function useSharedState<T extends KeyValueObject>(
   client: RoomServiceClient,
   roomReference: string,
   defaultState?: T

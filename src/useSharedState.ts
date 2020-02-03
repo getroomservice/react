@@ -1,6 +1,5 @@
 import RoomServiceClient from "@roomservice/browser";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { useRoomService } from "./index";
 import { DUMMY_PATH, DUMMY_URL, mockAuthEndpoint } from "./test-util";
 
 test("should call connect and publish", async () => {
@@ -35,7 +34,7 @@ test("should call connect and publish", async () => {
   });
 
   // @ts-ignore "wait" does exist but the typings for the lib are bad
-  const { result, wait } = renderHook(() => useRoomService(client, "my-room"));
+  const { result, wait } = renderHook(() => useSharedState(client, "my-room"));
 
   // Can we call setState without problems before
   // we're connected?

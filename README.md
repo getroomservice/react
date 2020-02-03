@@ -42,9 +42,9 @@ function MyComponent() {
 }
 ```
 
-## Caveats
+## Rules
 
-**Caveat 1: only use a function parameter.** Unlike the regular `setState`, `setSharedState` _only_ supports a function as an argument, not an object.
+**Rule 1: only use a function parameter.** Unlike the regular `setState`, `setSharedState` _only_ supports a function as an argument, not an object.
 
 For example:
 
@@ -60,7 +60,7 @@ setSharedState(prevState => {
 });
 ```
 
-**Caveat 2: don't return anything.** As you may have noticed, the function you pass into `setSharedState` does not _return_ anything from the document like `setState` does. Instead, it works like [Immer](https://immerjs.github.io/immer/docs/introduction) does; you mutate the object itself.
+**Rule 2: don't return anything.** As you may have noticed, the function you pass into `setSharedState` does not _return_ anything from the document like `setState` does. Instead, it works like [Immer](https://immerjs.github.io/immer/docs/introduction) does; you mutate the object itself.
 
 For example:
 
@@ -79,7 +79,7 @@ setSharedState(prevState => {
 });
 ```
 
-**Caveat 3: only JSON primitives.** Don't pass classes, functions, or React components into your shared state. Only JSON primitives, like lists, numbers, strings, and maps work. As a rule of thumb, if it wouldn't be valid in `someFile.json`, it won't be valid in Room Service.
+**Rule 3: only JSON primitives.** Don't pass classes, functions, or React components into your shared state. Only JSON primitives, like lists, numbers, strings, and maps work. As a rule of thumb, if it wouldn't be valid in `someFile.json`, it won't be valid in Room Service.
 
 For example:
 

@@ -8,7 +8,7 @@
     "outDir": "./dist",
     "rootDirs": ["./src"],
     "strict": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "target": "es2017",
     "esModuleInterop": true,
     "sourceMap": true,

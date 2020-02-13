@@ -9,16 +9,16 @@
     "test": "jest"
   },
   "dependencies": {
+    "@roomservice/browser": "next",
     "invariant": "^2.2.4",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@roomservice/browser": "^0.3.0",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/invariant": "^2.2.30",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.16",
-    "@types/react": "^16.9.16",
+    "@types/react": "^16.9.19",
     "@types/safe-json-stringify": "^1.1.0",
     "@types/socket.io-client": "^1.4.32",
     "jest": "^24.9.0",
@@ -31,7 +31,6 @@
     "typescript": "^3.7.3"
   },
   "peerDependencies": {
-    "@roomservice/browser": "0.3.x",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },

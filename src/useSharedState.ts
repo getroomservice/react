@@ -50,8 +50,10 @@ export function useSharedState<T>(
       return;
     }
 
-    const state = room.setDoc(callback);
-    setState(state);
+    room.setDoc(callback).then(s => {
+      console.log("hi");
+      setState(s);
+    });
   }
 
   useEffect(() => {

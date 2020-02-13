@@ -9,7 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@roomservice/browser": "next",
+    "@roomservice/browser": "0.4.0-6",
     "invariant": "^2.2.4",
     "tiny-warning": "^1.0.3"
   },
@@ -21,6 +21,7 @@
     "@types/react": "^16.9.19",
     "@types/safe-json-stringify": "^1.1.0",
     "@types/socket.io-client": "^1.4.32",
+    "fake-indexeddb": "^3.0.0",
     "jest": "^24.9.0",
     "nock": "^11.7.0",
     "react": "^16.12.0",

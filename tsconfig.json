@@ -5,6 +5,7 @@
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "module": "commonjs",
+    "moduleResolution": "node",
     "outDir": "./dist",
     "rootDirs": ["./src"],
     "strict": false,
@@ -12,7 +13,11 @@
     "target": "es2017",
     "esModuleInterop": true,
     "sourceMap": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": false,
     "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules", "lib", "esm", "tests", "stories"]
 }

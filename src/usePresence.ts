@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { RoomServiceContext } from "./context";
+import RoomClient from "@roomservice/browser/dist/room-client";
 
 interface PresenceOptions {
   // "user" means the presence of a user, in any browser tab or device,
@@ -21,18 +22,21 @@ export function usePresence<T>(
 ): [{ [key: string]: T }, (v: T) => void] {
   const [states, setStates] = useState({});
   const client = useContext(RoomServiceContext);
-  if (!client) {
-    throw new Error(
-      "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
-    );
-  }
-
-  const r = client.room(room);
+  const [_room, setRoom] = useState<RoomClient>();
 
   const splitBy = options?.splitBy || "user";
 
   useEffect(() => {
     async function setup() {
+      if (!client) {
+        throw new Error(
+          "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
+        );
+      }
+
+      const r = client.room(room);
+      setRoom(r);
+
       await r.init();
 
       r.onSetPresence((meta, value) => {
@@ -48,7 +52,7 @@ export function usePresence<T>(
   }, [room, key]);
 
   function setPresence(value: any) {
-    r.setPresence(key, value);
+    _room.setPresence(key, value);
   }
 
   return [states, setPresence];

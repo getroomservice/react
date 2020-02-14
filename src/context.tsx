@@ -4,6 +4,7 @@ import RoomService from "@roomservice/browser";
 
 interface RoomServiceProps {
   authUrl: string;
+  headers?: Headers;
   children: React.ReactNode;
 }
 
@@ -16,7 +17,8 @@ export const RoomServiceProvider = (props: RoomServiceProps) => {
   }
 
   const client = new RoomService({
-    authUrl: props.authUrl
+    authUrl: props.authUrl,
+    headers: props.headers
   });
 
   return (

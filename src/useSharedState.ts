@@ -51,7 +51,6 @@ export function useSharedState<T>(
     }
 
     room.setDoc(callback).then(s => {
-      console.log("hi");
       setState(s);
     });
   }

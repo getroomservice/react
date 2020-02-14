@@ -7,7 +7,7 @@
     "module": "commonjs",
     "outDir": "./dist",
     "rootDirs": ["./src"],
-    "strict": true,
+    "strict": false,
     "jsx": "react",
     "target": "es2017",
     "esModuleInterop": true,

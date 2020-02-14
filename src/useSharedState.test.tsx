@@ -49,8 +49,9 @@ test("should call connect and publish", async () => {
 
   // @ts-ignore "wait" does exist but the typings for the lib are bad
   const { result, wait, waitForNextUpdate } = renderHook(
-    () => useSharedState(client, "my-room"),
+    () => useSharedState("my-room"),
     {
+      // @ts-ignore
       wrapper
     }
   );

@@ -5,26 +5,38 @@ The `@roomservice/react` library is the main JS library for RoomService. You sho
 ## Installing
 
 ```
-npm install --save @roomservice/react @roomservice/browser
+npm install --save @roomservice/react@next
+```
+
+or, with [yarn](https://yarnpkg.com/):
+
+```
+yarn add @roomservice/react@next
 ```
 
 ## Usage
 
-### Create an instance of the RoomService client.
+### Setup a `<RoomServiceProvider />`
 
-You should use the auth endpoint that you setup on your own backend.
+At the top of your app, add a `RoomServiceProvider` with your [auth endpoint](https://www.roomservice.dev/docs/auth).
 
 ```js
-import RoomService from "@roomservice/browser";
+import { RoomServiceProvider } from "@roomservice/react";
 
-const client = new RoomService({
-  authorizationUrl: "https://your-backend/your/auth/endpoint"
-});
+function App() {
+  return (
+    <RoomServiceProvider authUrl="https://yoursite.com/api/roomservice">
+      <CollaborativeComponent />
+    </RoomServiceProvider>
+  );
+}
+
+export default App;
 ```
 
-### useRoomService
+### `useSharedState`
 
-Regular usage:
+Shared state lets you and other folks in the room collaborate on the same JSON state. Shared state has a built-in CRDT and offline support, so you can assume that merges will happen automatically, deterministically, and without the need for constant internet connection.
 
 ```js
 import { useSharedState } from "@roomservice/react";
@@ -42,7 +54,7 @@ function MyComponent() {
 }
 ```
 
-## Rules 
+#### Rules of sharedState
 
 **Rule 1: only use a function parameter.** Unlike the regular `setState`, `setSharedState` _only_ supports a function as an argument, not an object.
 
@@ -93,3 +105,45 @@ setSharedState(prevState => {
   prevState.bike = new MyBike();
 });
 ```
+
+### `usePresence`
+
+Presence is temporary state for each individual user in a room that, like shared-state, updates automatically. Presence is not stored in a CRDT and does not do automatic merging.
+
+Unlike shared state, presence has extremely low latency, which makes it perfect for:
+
+- Mouse cursors
+- GPS locations
+- the cell position in a table
+- device info
+- the tab someone's on
+- ???
+
+```js
+import { usePresence } from "@roomservice/react";
+
+const [positions, setMyPosition] = usePresence("my-room", "cell-positions");
+
+// Set your presence.
+setMyPosition({
+  x: 0,
+  y: 10
+});
+
+// Access other user's presence
+const { x, y } = positions["my-user-reference"];
+```
+
+Note that presence returns an object, not an array. So if you want to iterate through multiple folks presences, you should use `Object.values`.
+
+```js
+function MapPins() {
+  const [locations, setMyPresence] = usePresence("my-room", "locations");
+
+  Object.values(locations).map(location => {
+    return <Pin lat={location.lat} long={location.long} >
+  })
+}
+```
+
+Presence is meant to be a primitive to make other declarative real-time features. So get creative and make your own custom hooks!

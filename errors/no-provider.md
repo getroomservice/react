@@ -30,7 +30,7 @@ function CollaborativeComponent() {
 
 function App() {
   return (
-    <RoomServiceProvider authUrl="/api/roomservice">
+    <RoomServiceProvider authUrl="https://yoursite.com/api/roomservice">
       <CollaborativeComponent />
     </RoomServiceProvider>
   );
@@ -55,7 +55,7 @@ function CollaborativeComponent() {
 function PoorlySetupApp() {
   return (
     <div>
-      <RoomServiceProvider authUrl="/api/roomservice">
+      <RoomServiceProvider authUrl="https://yoursite.com/api/roomservice">
         <div>Hello there!</div>
       </RoomServiceProvider>
 

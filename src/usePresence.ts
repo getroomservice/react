@@ -52,9 +52,15 @@ export function usePresence<T>(
   }, [room, key]);
 
   function setPresence(value: any) {
+    if (!client) {
+      throw new Error(
+        "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
+      );
+    }
     if (!_room) {
       return;
     }
+
     _room.setPresence(key, value);
   }
 

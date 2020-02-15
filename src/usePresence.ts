@@ -52,6 +52,9 @@ export function usePresence<T>(
   }, [room, key]);
 
   function setPresence(value: any) {
+    if (!_room) {
+      return;
+    }
     _room.setPresence(key, value);
   }
 

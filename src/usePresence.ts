@@ -19,8 +19,9 @@ export function usePresence<T>(
   room: string,
   key: string,
   options?: PresenceOptions
-): [{ [key: string]: T }, (v: T) => void] {
+): [boolean, { [key: string]: T }, (v: T) => void] {
   const [states, setStates] = useState({});
+  const [isConnected, setIsConnected] = useState(false);
   const client = useContext(RoomServiceContext);
   const [_room, setRoom] = useState<RoomClient>();
 
@@ -47,8 +48,16 @@ export function usePresence<T>(
           return { ...prevStates, [key]: value };
         });
       });
+
+      r.onConnect(() => {
+        setIsConnected(true);
+      });
+
+      r.onDisconnect(() => {
+        setIsConnected(false);
+      });
     }
-    setup();
+    setup().catch(err => console.error(err));
   }, [room, key]);
 
   function setPresence(value: any) {
@@ -65,5 +74,5 @@ export function usePresence<T>(
     _room.setPresence(key, value);
   }
 
-  return [states, setPresence];
+  return [isConnected, states, setPresence];
 }

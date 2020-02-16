@@ -19,12 +19,18 @@ export function usePresence<T>(
   room: string,
   key: string,
   options?: PresenceOptions
-): [boolean, { [key: string]: T }, (v: T) => void] {
+): [{ [key: string]: T }, (v: T) => void, boolean] {
   const [states, setStates] = useState({});
   const [isConnected, setIsConnected] = useState(false);
   const client = useContext(RoomServiceContext);
-  const [_room, setRoom] = useState<RoomClient>();
 
+  if (!client) {
+    throw new Error(
+      "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
+    );
+  }
+
+  const r = client.room(room);
   const splitBy = options?.splitBy || "user";
 
   useEffect(() => {
@@ -34,9 +40,6 @@ export function usePresence<T>(
           "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
         );
       }
-
-      const r = client.room(room);
-      setRoom(r);
 
       await r.init();
 
@@ -66,14 +69,9 @@ export function usePresence<T>(
         "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
       );
     }
-    if (!_room) {
-      console.log(isConnected);
-      console.warn("No room set");
-      return;
-    }
 
-    _room.setPresence(key, value);
+    r.setPresence(key, value);
   }
 
-  return [isConnected, states, setPresence];
+  return [states, setPresence, isConnected];
 }

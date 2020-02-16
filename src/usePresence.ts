@@ -58,6 +58,7 @@ export function usePresence<T>(
       );
     }
     if (!_room) {
+      console.warn("No room set");
       return;
     }
 

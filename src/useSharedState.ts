@@ -56,7 +56,7 @@ export function useSharedState<T>(
   }
 
   useEffect(() => {
-    load();
+    load().catch(err => console.error(err));
 
     return function cleanup() {
       if (room) {

@@ -44,11 +44,15 @@ export function usePresence<T>(
       await r.init();
 
       r.onSetPresence((meta, value) => {
-        const key =
+        if (meta.namespace !== key) {
+          return;
+        }
+
+        const by =
           splitBy === "user" ? meta.guest!.reference : meta.connectionId!;
 
         setStates(prevStates => {
-          return { ...prevStates, [key]: value };
+          return { ...prevStates, [by]: value };
         });
       });
 

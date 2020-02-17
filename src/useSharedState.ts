@@ -8,6 +8,7 @@ export function useSharedState<T>(
 ): [T, (cb: (state: T) => void) => void, boolean] {
   const client = useContext(RoomServiceContext);
   const [state, setState] = useState<T>((defaultState || {}) as T);
+  const [room, setRoom] = useState<RoomClient>();
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
   if (!client) {
@@ -16,14 +17,15 @@ export function useSharedState<T>(
     );
   }
 
-  const room = client.room<T>(roomReference, defaultState);
-
   async function load() {
     if (!client) {
       throw new Error(
         "useSharedState was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
       );
     }
+
+    const room = client.room<T>(roomReference, defaultState);
+    setRoom(room);
 
     room.onConnect(() => {
       setIsConnected(true);
@@ -50,6 +52,9 @@ export function useSharedState<T>(
   function publishState(callback: (state: T) => void) {
     // It's technically possible to call this before it gets set,
     // but we'll just ignore that quirk for now.
+    if (!room) {
+      return;
+    }
 
     room.setDoc(callback).then(s => {
       setState(s);

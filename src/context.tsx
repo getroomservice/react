@@ -17,6 +17,7 @@ export const RoomServiceProvider = (props: RoomServiceProps) => {
   }
 
   const [client] = useState<RoomService>(() => {
+    console.log("Creating a new client");
     return new RoomService({
       authUrl: props.authUrl,
       headers: props.headers

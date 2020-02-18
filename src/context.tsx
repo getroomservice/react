@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createContext } from "react";
 import RoomService from "@roomservice/browser";
 
@@ -16,9 +16,11 @@ export const RoomServiceProvider = (props: RoomServiceProps) => {
     throw new Error("The RoomServiceProvider must have an authUrl prop.");
   }
 
-  const client = new RoomService({
-    authUrl: props.authUrl,
-    headers: props.headers
+  const [client] = useState<RoomService>(() => {
+    return new RoomService({
+      authUrl: props.authUrl,
+      headers: props.headers
+    });
   });
 
   return (

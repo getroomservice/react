@@ -16,13 +16,14 @@ export const RoomServiceProvider = (props: RoomServiceProps) => {
     throw new Error("The RoomServiceProvider must have an authUrl prop.");
   }
 
-  const [client] = useState<RoomService>(() => {
-    console.log("Creating a new client");
-    return new RoomService({
-      authUrl: props.authUrl,
-      headers: props.headers
-    });
-  });
+  const [client] = useState<RoomService>(
+    // Using this format to ensure there's only one client created
+    () =>
+      new RoomService({
+        authUrl: props.authUrl,
+        headers: props.headers
+      })
+  );
 
   return (
     <RoomServiceContext.Provider value={client}>

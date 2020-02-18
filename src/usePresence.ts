@@ -65,6 +65,12 @@ export function usePresence<T>(
       });
     }
     setup().catch(err => console.error(err));
+
+    return function cleanup() {
+      if (room) {
+        r.disconnect();
+      }
+    };
   }, [room, key]);
 
   function setPresence(value: any) {

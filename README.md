@@ -42,7 +42,7 @@ Shared state lets you and other folks in the room collaborate on the same JSON s
 import { useSharedState } from "@roomservice/react";
 
 function MyComponent() {
-  const [sharedState, setSharedState] = useSharedState(client, "my-room");
+  const [sharedState, setSharedState] = useSharedState("my-room");
 
   function onChange() {
     setSharedState(prevState => {

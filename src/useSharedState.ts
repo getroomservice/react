@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { RoomServiceContext } from "./context";
-import RoomClient from "@roomservice/browser/dist/room-client";
 
 export function useSharedState<T>(
   roomReference: string,

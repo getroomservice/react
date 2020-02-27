@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { RoomServiceContext } from "./context";
-import RoomClient from "@roomservice/browser/dist/room-client";
 
 interface PresenceOptions {
   // "user" means the presence of a user, in any browser tab or device,
@@ -15,13 +14,19 @@ interface PresenceOptions {
   splitBy: "user" | "connection";
 }
 
-export function usePresence<T>(
+export function usePresence<T extends { [key: string]: any }, K extends string>(
   room: string,
-  key: string,
-  options?: PresenceOptions
-): [{ [key: string]: T }, (v: T) => void, boolean] {
+  namespace: K
+): [
+  {
+    [x: string]: {
+      [key in K]: T;
+    };
+  },
+  (val: T) => void
+] {
   const [states, setStates] = useState({});
-  const [isConnected, setIsConnected] = useState(false);
+  const [_, setIsConnected] = useState(false);
   const client = useContext(RoomServiceContext);
 
   if (!client) {
@@ -31,7 +36,7 @@ export function usePresence<T>(
   }
 
   const r = client.room(room);
-  const splitBy = options?.splitBy || "user";
+  const splitBy = "user"; // TODO, allow "connection"
 
   useEffect(() => {
     async function setup() {
@@ -44,15 +49,19 @@ export function usePresence<T>(
       await r.init();
 
       r.onSetPresence((meta, value) => {
-        if (meta.namespace !== key) {
+        if (meta.namespace !== namespace) {
           return;
         }
 
         const by =
           splitBy === "user" ? meta.guest!.reference : meta.connectionId!;
 
+        const presence = {
+          [namespace]: value
+        };
+
         setStates(prevStates => {
-          return { ...prevStates, [by]: value };
+          return { ...prevStates, [by]: presence };
         });
       });
 
@@ -71,17 +80,18 @@ export function usePresence<T>(
         r.disconnect();
       }
     };
-  }, [room, key]);
+  }, [room, namespace]);
 
-  function setPresence(value: any) {
+  function setPresence(value: T) {
     if (!client) {
       throw new Error(
         "usePresence was used outside the context of RoomServiceProvider. More details: https://err.sh/getroomservice/react/no-provider"
       );
     }
 
-    r.setPresence(key, value);
+    r.setPresence(namespace, value);
   }
 
-  return [states, setPresence, isConnected];
+  // @ts-ignore
+  return [states, setPresence];
 }

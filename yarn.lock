@@ -294,12 +294,12 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@roomservice/browser@0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.2.tgz#3ea52abe6d0df3b54335fc254947f6bc39702fb4"
-  integrity sha512-KAxxY5o4WJTr6hhMqNznO+HAAhKLXwgrbBPEfbqf8B5G8jgqa0hqWaBuK+gHGfuLSjTh6zBkh1OHYQID3k5hZA==
+"@roomservice/browser@0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.3.tgz#e78e101eb316ae36fec50a31fb3904569eb5a0aa"
+  integrity sha512-gMmqUIHNMORt9Y88jkC4MIgMo6bNsVQKbMG/t127beGwlWUKIKa1DwuxvQWhxjMpZAfB8AAkeCEm2J19TJ/0og==
   dependencies:
-    automerge "^0.12.1"
+    automerge "0.13.0"
     idb-keyval "^3.2.0"
     immutable "^4.0.0-rc.12"
     invariant "^2.2.4"
@@ -601,10 +601,10 @@ automerge-clocks@1.2.0:
   resolved "https://registry.yarnpkg.com/automerge-clocks/-/automerge-clocks-1.2.0.tgz#b14a127c8206ae0cac80662855978dbba3a73b38"
   integrity sha512-OuJSINp5Dv2qqWfuM/qhN9VajSWd+Sk19oLVR7tPih4xI+4dnu+6q6pNsCJkprx6zII/wMZPKT1olVSIcNY/RA==
 
-automerge@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/automerge/-/automerge-0.12.1.tgz#8e8ca23affa888c6376ee19068eab573cfa8ba09"
-  integrity sha512-7JOiRk4b6EP/Uj0AjmZTeYICXJmBRHFkL0U3mlTNXuDlUr3c4v/Wb8v0RXiX4UuVgGjkovcjOdiBMkVmzdu2KQ==
+automerge@0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/automerge/-/automerge-0.13.0.tgz#cf9852a30255d445ac7f15576c53f78624f6560b"
+  integrity sha512-yJZmKeKgyPJt6xgZ0MpV2GYT/U4cDpWxK4xCrGIXGSuiboTI+eDSMJSfBWtNiUV7QRHaVeChho5KveYjAj91cg==
   dependencies:
     immutable "^3.8.2"
     transit-immutable-js "^0.7.0"

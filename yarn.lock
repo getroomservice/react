@@ -294,19 +294,19 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@roomservice/browser@0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.3.tgz#e78e101eb316ae36fec50a31fb3904569eb5a0aa"
-  integrity sha512-gMmqUIHNMORt9Y88jkC4MIgMo6bNsVQKbMG/t127beGwlWUKIKa1DwuxvQWhxjMpZAfB8AAkeCEm2J19TJ/0og==
+"@roomservice/browser@0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.4.tgz#688347dea743185c6e83f0d070ff3331879179f0"
+  integrity sha512-HCB8uFcKHEmw70MpyzIZJIY3gosBymRkPwE/OAr0ojJtaGjFnxfLeBWCXAw/7g/RScXSyKYHeke6j38l2Qa27A==
   dependencies:
     automerge "0.13.0"
     idb-keyval "^3.2.0"
-    immutable "^4.0.0-rc.12"
+    immutable "^3.8.2"
     invariant "^2.2.4"
     ky "^0.16.1"
     ky-universal "^0.3.0"
     lodash "^4.17.15"
-    manymerge "2.2.0"
+    manymerge "2.5.3"
     safe-json-stringify "^1.2.0"
     socket.io-client "^2.3.0"
     uuid "^3.3.3"
@@ -596,12 +596,12 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-automerge-clocks@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/automerge-clocks/-/automerge-clocks-1.2.0.tgz#b14a127c8206ae0cac80662855978dbba3a73b38"
-  integrity sha512-OuJSINp5Dv2qqWfuM/qhN9VajSWd+Sk19oLVR7tPih4xI+4dnu+6q6pNsCJkprx6zII/wMZPKT1olVSIcNY/RA==
+automerge-clocks@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/automerge-clocks/-/automerge-clocks-1.2.1.tgz#3ec98bc96c42e3bdb6b36b94ec9e395cbd7f55b2"
+  integrity sha512-3EPLORMwSmnWJLUcIPPvPGQ+LCgoGTw1CsmaSWyiIXhqe8pWwAygHLjhXP07i5x1G/c/VRYOh1xeYWd09DJdAQ==
 
-automerge@0.13.0:
+automerge@0.13.0, automerge@^0.13.0:
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/automerge/-/automerge-0.13.0.tgz#cf9852a30255d445ac7f15576c53f78624f6560b"
   integrity sha512-yJZmKeKgyPJt6xgZ0MpV2GYT/U4cDpWxK4xCrGIXGSuiboTI+eDSMJSfBWtNiUV7QRHaVeChho5KveYjAj91cg==
@@ -1541,11 +1541,6 @@ immutable@^3.8.2:
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
   integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
 
-immutable@^4.0.0-rc.12:
-  version "4.0.0-rc.12"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.12.tgz#ca59a7e4c19ae8d9bf74a97bdf0f6e2f2a5d0217"
-  integrity sha512-0M2XxkZLx/mi3t8NVwIm1g8nHoEmM9p9UBl/G9k4+hm0kBgOVdMV/B3CY5dQ8qG8qc80NN4gDV4HQv6FTJ5q7A==
-
 import-local@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/import-local/-/import-local-2.0.0.tgz#55070be38a5993cf18ef6db7e961f5bee5c5a09d"
@@ -2362,13 +2357,15 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-manymerge@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/manymerge/-/manymerge-2.2.0.tgz#4c89ccbc2cb535f79252b040cf1ef89907c5a1a9"
-  integrity sha512-zSN0xCZSv8WG6khuPjqCAq2j0d+cQZeuZT6QkLHCrcziAnN4xRyPooOxRZh07J/Vt3XvFN6BjXR0RPiJxDsqpw==
+manymerge@2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/manymerge/-/manymerge-2.5.3.tgz#932f5c01e8830d555a414e50c7d961359bf8ba46"
+  integrity sha512-z78J/ZrZSGYfVNKsJAwBKTiRHXofphyX2vfa02kKnsi2LoMXCmUqkinCMcCHbyJrVABux88CnB6y3/SlI5PMPg==
   dependencies:
     "@types/events" "^3.0.0"
-    automerge-clocks "1.2.0"
+    automerge "^0.13.0"
+    automerge-clocks "1.2.1"
+    immutable "^3.8.2"
     invariant "^2.2.4"
 
 map-cache@^0.2.2:

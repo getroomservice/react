@@ -294,10 +294,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@roomservice/browser@0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.4.tgz#688347dea743185c6e83f0d070ff3331879179f0"
-  integrity sha512-HCB8uFcKHEmw70MpyzIZJIY3gosBymRkPwE/OAr0ojJtaGjFnxfLeBWCXAw/7g/RScXSyKYHeke6j38l2Qa27A==
+"@roomservice/browser@0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.5.tgz#37c97a21746a1465a15e235b817c6e487801d23c"
+  integrity sha512-mNGw2Fcr2KR6bWVECCCMq48s91Os66DMvBlVitO42P7UTjkXJovZ5KJDUCHdbbDqTndb3QPaU/0yPMwTp8cAlQ==
   dependencies:
     automerge "0.13.0"
     idb-keyval "^3.2.0"
@@ -306,6 +306,7 @@
     ky "^0.16.1"
     ky-universal "^0.3.0"
     lodash "^4.17.15"
+    lodash-es "^4.17.15"
     manymerge "2.5.3"
     safe-json-stringify "^1.2.0"
     socket.io-client "^2.3.0"
@@ -2314,6 +2315,11 @@ locate-path@^3.0.0:
   dependencies:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
+
+lodash-es@^4.17.15:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
+  integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
 
 lodash.memoize@4.x:
   version "4.1.2"

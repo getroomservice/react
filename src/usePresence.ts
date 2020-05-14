@@ -51,7 +51,7 @@ export function usePresence<T>(
         const by =
           splitBy === "user" ? meta.guest!.reference : meta.connectionId!;
 
-        setStates(prevStates => {
+        setStates((prevStates) => {
           return { ...prevStates, [by]: value };
         });
       });
@@ -64,7 +64,7 @@ export function usePresence<T>(
         setIsConnected(false);
       });
     }
-    setup().catch(err => console.error(err));
+    setup().catch((err) => console.error(err));
 
     return function cleanup() {
       if (room) {

@@ -294,10 +294,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@roomservice/browser@0.4.5":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.4.5.tgz#37c97a21746a1465a15e235b817c6e487801d23c"
-  integrity sha512-mNGw2Fcr2KR6bWVECCCMq48s91Os66DMvBlVitO42P7UTjkXJovZ5KJDUCHdbbDqTndb3QPaU/0yPMwTp8cAlQ==
+"@roomservice/browser@0.5.0-0":
+  version "0.5.0-0"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.5.0-0.tgz#2ce5a4019884552b0e109616cd8b7ee57cef8609"
+  integrity sha512-I68htrlE7vzSFc9wLZMVSAUCP4Bs0BlG3fffhZOdfam71bxI80bUJgJHyev+0k/JCJ66QGnq6TIWPLwI5poFOQ==
   dependencies:
     automerge "0.13.0"
     idb-keyval "^3.2.0"
@@ -2785,6 +2785,11 @@ prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
+
+prettier@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
+  integrity sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
 
 pretty-format@^24.9.0:
   version "24.9.0"

@@ -294,10 +294,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@roomservice/browser@0.5.0-0":
-  version "0.5.0-0"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.5.0-0.tgz#2ce5a4019884552b0e109616cd8b7ee57cef8609"
-  integrity sha512-I68htrlE7vzSFc9wLZMVSAUCP4Bs0BlG3fffhZOdfam71bxI80bUJgJHyev+0k/JCJ66QGnq6TIWPLwI5poFOQ==
+"@roomservice/browser@0.5.0-1":
+  version "0.5.0-1"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-0.5.0-1.tgz#13f8759d3db1c3022112e5b62695c1d87dfe410f"
+  integrity sha512-FhA0u11ZZ0bR8ZvlSL5e4s6ePvRl2SFZX33KkNMULtMzEe9N4A7R3kK78coRRynXyFt2+vRXHDXpjV9ElUIqFw==
   dependencies:
     automerge "0.13.0"
     idb-keyval "^3.2.0"

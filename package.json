@@ -1,6 +1,6 @@
 {
   "name": "@roomservice/react",
-  "version": "0.5.0-1",
+  "version": "0.5.0-2",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {

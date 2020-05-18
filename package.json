@@ -9,7 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@roomservice/browser": "0.5.0-4",
+    "@roomservice/browser": "0.5.0-5",
     "invariant": "^2.2.4",
     "tiny-warning": "^1.0.3"
   },

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./misc/logo.svg" width=450 alt="@roomservice/react"  />
+  <img src="./misc/logo.svg" alt="@roomservice/react"  />
 </p>
 
 This is the official React client for Room Service. It's currently an experimental

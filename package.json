@@ -33,7 +33,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "react",
+  "name": "@roomservice/react",
   "author": "Flaque",
   "module": "dist/react.esm.js",
   "size-limit": [

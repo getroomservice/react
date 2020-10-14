@@ -21,7 +21,7 @@ export function useRoom(roomName: string): RoomClient | undefined {
     }
 
     load().catch(console.error);
-  }, [roomName, ctx.addRoom]);
+  }, [roomName]);
 
   return room;
 }

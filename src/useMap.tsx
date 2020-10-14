@@ -12,10 +12,10 @@ export function useMap<T extends any>(
   useEffect(() => {
     if (!room) return;
 
-    const m = room.map<T>(mapName);
+    const m = room!.map<T>(mapName);
     setMap(m);
 
-    room.subscribe(m, next => {
+    room!.subscribe(m, next => {
       setMap(next);
     });
   }, [room, mapName]);

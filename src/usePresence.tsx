@@ -13,10 +13,10 @@ export function usePresence<T extends any>(
   useEffect(() => {
     if (!room) return;
 
-    const p = room.presence();
+    const p = room!.presence();
     setPresence(p);
 
-    room.subscribe<T>(p, key, val => {
+    room!.subscribe<T>(p, key, val => {
       setVal(val);
     });
   }, [room, key]);

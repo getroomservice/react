@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
 
@@ -22,10 +22,13 @@ export function usePresence<T extends any>(
   }, [room, key]);
 
   //TODO: batch calls to this function before presence is ready
-  function set(value: T) {
-    if (!presence.current) return;
-    presence.current?.set(key, value);
-  }
+  const set = useCallback(
+    (value: T) => {
+      if (!presence.current) return;
+      presence.current?.set(key, value);
+    }, 
+    [],
+  );
 
   return [val, set];
 }

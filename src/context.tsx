@@ -21,6 +21,7 @@ export function RoomServiceProvider({
 }) {
   const rs = new RoomService(clientParameters);
   // ref instead of state here to prevent a double render
+  //  and allow delayed initialization
   const ref = useRef<{ [key: string]: RoomClient }>({});
 
   async function addRoom(key: string) {

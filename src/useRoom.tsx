@@ -13,11 +13,7 @@ export function useRoom(roomName: string): RoomClient | undefined {
 
   useEffect(() => {
     async function load() {
-      let room = ctx.rooms[roomName];
-      if (!room) {
-        room = await ctx!.addRoom!(roomName);
-      }
-      setRoom(room);
+      setRoom(await ctx!.addRoom!(roomName));
     }
 
     load().catch(console.error);

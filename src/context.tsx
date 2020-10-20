@@ -4,12 +4,10 @@ import { createContext, ReactNode, useRef } from 'react';
 import { RoomServiceParameters } from '@roomservice/browser/dist/RoomServiceClient';
 
 interface RoomServiceContext {
-  rooms: { [key: string]: RoomClient };
   addRoom?: (key: string) => Promise<RoomClient>;
 }
 
 export const context = createContext<RoomServiceContext>({
-  rooms: {},
 });
 
 export function RoomServiceProvider({
@@ -22,8 +20,6 @@ export function RoomServiceProvider({
   const rs = new RoomService(clientParameters);
   // ref instead of state here to prevent a double render
   //  and allow delayed initialization
-  const roomsRef = useRef<{ [key: string]: RoomClient }>({});
-
   const pendingRef = useRef<{ [key: string]: Promise<RoomClient> }>({});
 
   async function addRoom(key: string) {
@@ -32,14 +28,12 @@ export function RoomServiceProvider({
       pendingRef.current[key] = rs.room(key);
     }
     const room = await pendingRef.current[key];
-    roomsRef.current[key] = room;
     return room;
   }
 
   return (
     <context.Provider
       value={{
-        rooms: roomsRef.current,
         addRoom,
       }}
     >

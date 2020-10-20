@@ -22,18 +22,24 @@ export function RoomServiceProvider({
   const rs = new RoomService(clientParameters);
   // ref instead of state here to prevent a double render
   //  and allow delayed initialization
-  const ref = useRef<{ [key: string]: RoomClient }>({});
+  const roomsRef = useRef<{ [key: string]: RoomClient }>({});
+
+  const pendingRef = useRef<{ [key: string]: Promise<RoomClient> }>({});
 
   async function addRoom(key: string) {
-    const room = await rs.room(key);
-    ref.current[key] = room;
+    //  Make sure rs.room is only ever called once per room
+    if (!pendingRef.current[key]) {
+      pendingRef.current[key] = rs.room(key);
+    }
+    const room = await pendingRef.current[key];
+    roomsRef.current[key] = room;
     return room;
   }
 
   return (
     <context.Provider
       value={{
-        rooms: ref.current,
+        rooms: roomsRef.current,
         addRoom,
       }}
     >

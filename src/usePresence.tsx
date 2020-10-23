@@ -16,19 +16,20 @@ export function usePresence<T extends any>(
     const p = room!.presence();
     presence.current = p;
 
+    p.getAll<T>(key).then(val => {
+      setVal(val);
+    });
+
     room!.subscribe<T>(p, key, val => {
       setVal(val);
     });
   }, [room, key]);
 
   //TODO: batch calls to this function before presence is ready
-  const set = useCallback(
-    (value: T) => {
-      if (!presence.current) return;
-      presence.current?.set(key, value);
-    }, 
-    [],
-  );
+  const set = useCallback((value: T) => {
+    if (!presence.current) return;
+    presence.current?.set(key, value);
+  }, []);
 
   return [val, set];
 }

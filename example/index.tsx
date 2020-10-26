@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { RoomServiceProvider, useMap } from '../.';
+import { RoomServiceProvider, useMap, usePresence } from '../.';
 
 const MapDemo = () => {
   const [map, setMap] = useMap<any>('room', 'map');
@@ -23,6 +23,41 @@ const MapDemo = () => {
   );
 };
 
+const useInterval = (callback, delay) => {
+  const savedCallback = React.useRef() as any;
+
+  React.useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  React.useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+};
+
+const PresenceDemo = () => {
+  const [first, setFirst] = usePresence('room', 'positions1');
+  const [second, setSecond] = usePresence('room', 'positions2');
+
+  useInterval(() => {
+    setFirst(new Date().toTimeString());
+    setSecond(new Date().toTimeString());
+  }, 1000);
+
+  return (
+    <div>
+      <p>{JSON.stringify(first)}</p>
+      <p>{JSON.stringify(second)}</p>
+    </div>
+  );
+};
+
 const Wrapper = () => {
   return (
     <div>
@@ -30,6 +65,7 @@ const Wrapper = () => {
         clientParameters={{ auth: 'http://localhost:3002/roomservice' }}
       >
         <MapDemo />
+        <PresenceDemo />
       </RoomServiceProvider>
     </div>
   );

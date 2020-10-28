@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { RoomClient, RoomService } from '@roomservice/browser';
+import {
+  RoomClient,
+  RoomService,
+  RoomServiceParameters,
+} from '@roomservice/browser';
 import { createContext, ReactNode, useRef } from 'react';
-import { RoomServiceParameters } from '@roomservice/browser/dist/RoomServiceClient';
 
-interface RoomServiceContext {
+interface ClientContext {
   addRoom?: (key: string) => Promise<RoomClient>;
 }
 
-export const context = createContext<RoomServiceContext>({
-});
+export const clientContext = createContext<ClientContext>({});
 
-export function RoomServiceProvider({
+export function ClientProvider({
   children,
   clientParameters,
 }: {
@@ -32,12 +34,12 @@ export function RoomServiceProvider({
   }
 
   return (
-    <context.Provider
+    <clientContext.Provider
       value={{
         addRoom,
       }}
     >
       {children}
-    </context.Provider>
+    </clientContext.Provider>
   );
 }

@@ -1,6 +1,7 @@
 import { useRoom } from './useRoom';
 import { ListClient } from '@roomservice/browser';
 import { useState, useEffect } from 'react';
+import { useLocalPubSub, useSelf } from './contextForSubscriptions';
 
 export function useList<T extends any>(
   roomName: string,
@@ -8,6 +9,9 @@ export function useList<T extends any>(
 ): [ListClient<T> | undefined, (list: ListClient<T>) => any] {
   const [list, setList] = useState<ListClient<T>>();
   const room = useRoom(roomName);
+  const self = useSelf();
+  const local = useLocalPubSub();
+  const key = 'l' + roomName + listName;
 
   useEffect(() => {
     if (!room) return;
@@ -18,7 +22,16 @@ export function useList<T extends any>(
     room.subscribe(l, next => {
       setList(next);
     });
+
+    local.subscribe(self, key, list => {
+      setList(list);
+    });
   }, [room, listName]);
 
-  return [list, setList];
+  function setAndBroadcastList(list: ListClient<T>) {
+    setList(list);
+    local.publish(self, key, list);
+  }
+
+  return [list, setAndBroadcastList];
 }

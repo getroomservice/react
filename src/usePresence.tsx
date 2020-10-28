@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
-import { useLocalPubSub } from './contextForSubscriptions';
+import { useLocalPubSub, useSelf } from './contextForSubscriptions';
 
 export function usePresence<T extends any>(
   roomName: string,
@@ -10,8 +10,9 @@ export function usePresence<T extends any>(
   const presence = useRef<PresenceClient>();
   const [val, setVal] = useState<{ [key: string]: T }>({});
   const room = useRoom(roomName);
+  const self = useSelf();
   const local = useLocalPubSub();
-  const localKey = roomName + key;
+  const localKey = 'p' + roomName + key;
 
   useEffect(() => {
     if (!room) return;
@@ -27,7 +28,7 @@ export function usePresence<T extends any>(
       setVal(val);
     });
 
-    local.subscribe(localKey, val => {
+    local.subscribe(self, localKey, val => {
       setVal(val);
     });
   }, [room, key]);
@@ -36,7 +37,7 @@ export function usePresence<T extends any>(
   const set = useCallback((value: T) => {
     if (!presence.current) return;
     presence.current?.set(key, value);
-    local.publish(localKey, value);
+    local.publish(self, localKey, value);
   }, []);
 
   return [val, set];

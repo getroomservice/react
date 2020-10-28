@@ -1,9 +1,24 @@
 import * as React from 'react';
 import { useRef, createContext, useContext } from 'react';
 
+type Instance = Symbol;
+
+/**
+ * Returns a unique reference to the calling component
+ * via a Symbol
+ */
+export function useSelf(): Instance {
+  const ref = useRef(Symbol('self'));
+  return ref.current;
+}
+
 interface SubscriptionContext {
-  subscribe: (event: string, callback: (arg: any) => any) => any;
-  publish: (event: string, data: any) => any;
+  subscribe: (
+    actor: Instance,
+    event: string,
+    callback: (arg: any) => any
+  ) => any;
+  publish: (actor: Instance, event: string, data: any) => any;
 }
 
 export const subscriptionContext = createContext<SubscriptionContext>(
@@ -19,16 +34,19 @@ export function SubscriptionProvider(props: { children: React.ReactNode }) {
     subs: {},
   });
 
-  function subscribe(event: string, callback: Function) {
+  function subscribe(actor: Instance, event: string, callback: Function) {
     if (!Array.isArray(ref.current.subs[event])) {
       ref.current!.subs[event] = [];
     }
-    ref.current!.subs[event].push(callback);
+    ref.current!.subs[event].push((a: Instance, data: any) => {
+      if (a === actor) return; // don't listen to ourselves
+      callback(data);
+    });
   }
 
-  function publish(event: string, data: any) {
+  function publish(actor: Instance, event: string, data: any) {
     if (!Array.isArray(ref.current.subs[event])) return;
-    for (let fn of ref.current.subs[event]) fn(data);
+    for (let fn of ref.current.subs[event]) fn(actor, data);
   }
 
   return (

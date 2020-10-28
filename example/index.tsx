@@ -5,6 +5,8 @@ import { RoomServiceProvider, useMap, usePresence } from '../.';
 
 function Input(props: { name: string; map: string }) {
   const [map, setMap] = useMap<any>('room', props.map);
+  const rerenders = React.useRef(0);
+  rerenders.current++;
   if (!map) return null;
 
   function onChange(key, e) {
@@ -13,10 +15,13 @@ function Input(props: { name: string; map: string }) {
   }
 
   return (
-    <input
-      value={map.get(props.name) || ''}
-      onChange={e => onChange(props.name, e)}
-    />
+    <>
+      <input
+        value={map.get(props.name) || ''}
+        onChange={e => onChange(props.name, e)}
+      />{' '}
+      {rerenders.current}
+    </>
   );
 }
 

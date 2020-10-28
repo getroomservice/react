@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { RoomClient } from '@roomservice/browser';
-import { context } from './context';
+import { clientContext } from './contextForClient';
+import { errOutsideOfProvider } from './errors';
 
 export function useRoom(roomName: string): RoomClient | undefined {
-  const ctx = useContext(context);
+  const ctx = useContext(clientContext);
   if (!ctx.addRoom) {
-    throw new Error(
-      'A hook is being used outside the RoomServiceProvider. Learn more: https://err.sh/getroomservice/react/no-provider'
-    );
+    throw errOutsideOfProvider();
   }
   const [room, setRoom] = useState<RoomClient>();
 

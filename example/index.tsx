@@ -3,8 +3,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { RoomServiceProvider, useMap, usePresence } from '../.';
 
-const MapDemo = () => {
-  const [map, setMap] = useMap<any>('room', 'map');
+function Input(props: { name: string; map: string }) {
+  const [map, setMap] = useMap<any>('room', props.map);
   if (!map) return null;
 
   function onChange(key, e) {
@@ -13,11 +13,26 @@ const MapDemo = () => {
   }
 
   return (
+    <input
+      value={map.get(props.name) || ''}
+      onChange={e => onChange(props.name, e)}
+    />
+  );
+}
+
+const MapDemo = () => {
+  return (
     <div>
       <label>
-        A <input value={map.get('a') || ''} onChange={e => onChange('a', e)} />
-        B <input value={map.get('b') || ''} onChange={e => onChange('b', e)} />
-        C <input value={map.get('c') || ''} onChange={e => onChange('c', e)} />
+        <p>
+          A <Input name="a" map="first" />
+        </p>
+        <p>
+          B <Input name="b" map="second" />
+        </p>
+        <p>
+          A <Input name="a" map="first" />
+        </p>
       </label>
     </div>
   );

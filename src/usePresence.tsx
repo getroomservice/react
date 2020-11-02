@@ -20,6 +20,12 @@ export function usePresence<T extends any>(
     const p = room!.presence();
     presence.current = p;
 
+    // Empty buffer
+    if (buffer.current !== undefined) {
+      set(buffer.current);
+      buffer.current = undefined;
+    }
+
     p.getAll<T>(key).then(val => {
       setVal(val);
     });
@@ -33,9 +39,17 @@ export function usePresence<T extends any>(
     });
   }, [room, key]);
 
+  // a programmer can technically write to the presence key before
+  // we connect to the room, this keeps track of that.
+  const buffer = useRef<any>(undefined);
+
   //TODO: batch calls to this function before presence is ready
   const set = useCallback((value: T) => {
-    if (!presence.current) return;
+    // Buffer before the rooom is open
+    if (!presence.current) {
+      buffer.current = value;
+      return;
+    }
     presence.current?.set(key, value);
     local.publish(self, localKey, value);
   }, []);

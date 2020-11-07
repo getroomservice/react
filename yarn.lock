@@ -1139,10 +1139,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@roomservice/browser@2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-2.1.4.tgz#20d6d8667dfe57832a8924804f7f9dce25f9b27d"
-  integrity sha512-34TsRRlAQ9GqFIAoJ1H45HxHopuYWrgDmfExl09tR/8EtGag2q5YaZDA9e9p3WIh0xghQ6a2G1bSWNoQDufNxg==
+"@roomservice/browser@2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-2.1.5.tgz#d1964a80cb4ee5b0d143ad575215d06597a1c552"
+  integrity sha512-/MLjjAAO3Pq1Z2TG6dRw+11m2tBbA4NLKTmG23iG5YsGTBka2TcKMdubASLpa6P5WuEBe3WCeErL7OvRk6PoOA==
   dependencies:
     tiny-invariant "^1.1.0"
 

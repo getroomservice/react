@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MapClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
-import { useLocalPubSub, useSelf } from './contextForSubscriptions';
 
 export function useMap<T extends any>(
   roomName: string,
@@ -9,9 +8,6 @@ export function useMap<T extends any>(
 ): [MapClient<T> | undefined, (map: MapClient<T>) => any] {
   const [map, setMap] = useState<MapClient<T>>();
   const room = useRoom(roomName);
-  const self = useSelf();
-  const local = useLocalPubSub();
-  const key = 'm' + roomName + mapName;
 
   useEffect(() => {
     if (!room) return;
@@ -22,15 +18,10 @@ export function useMap<T extends any>(
     room!.subscribe(m, next => {
       setMap(next);
     });
-
-    local.subscribe(self, key, list => {
-      setMap(list);
-    });
   }, [room, mapName]);
 
   function setAndBroadcast(map: MapClient<T>) {
     setMap(map);
-    local.publish(self, key, map);
   }
 
   return [map, setAndBroadcast];

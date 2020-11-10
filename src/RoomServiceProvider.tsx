@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ClientProvider } from './contextForClient';
-import { SubscriptionProvider } from './contextForSubscriptions';
 import { RoomServiceParameters } from '@roomservice/browser';
 
 export function RoomServiceProvider(props: {
@@ -8,10 +7,8 @@ export function RoomServiceProvider(props: {
   clientParameters: RoomServiceParameters;
 }) {
   return (
-    <SubscriptionProvider>
-      <ClientProvider clientParameters={props.clientParameters}>
-        {props.children}
-      </ClientProvider>
-    </SubscriptionProvider>
+    <ClientProvider clientParameters={props.clientParameters}>
+      {props.children}
+    </ClientProvider>
   );
 }

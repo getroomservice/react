@@ -6,7 +6,7 @@ export function useList<T extends Array<any>>(
   roomName: string,
   listName: string
 ): [T, ListClient<T> | undefined] {
-  const [obj, setObj] = useState<T>({} as T);
+  const [obj, setObj] = useState<any>([]);
   const [list, setList] = useState<ListClient<T>>();
   const room = useRoom(roomName);
 

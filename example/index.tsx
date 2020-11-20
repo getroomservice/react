@@ -4,22 +4,18 @@ import * as ReactDOM from 'react-dom';
 import { RoomServiceProvider, useMap, usePresence } from '../.';
 
 function Input(props: { name: string; map: string }) {
-  const [map, setMap] = useMap<any>('room', props.map);
+  const [json, map] = useMap<any>('room', props.map);
   const rerenders = React.useRef(0);
   rerenders.current++;
-  if (!map) return null;
 
   function onChange(key, e) {
     if (!map) return;
-    setMap(map.set(key, e.target.value));
+    map.set(key, e.target.value);
   }
 
   return (
     <>
-      <input
-        value={map.get(props.name) || ''}
-        onChange={e => onChange(props.name, e)}
-      />{' '}
+      <input value={json[name]} onChange={e => onChange(props.name, e)} />{' '}
       {rerenders.current}
     </>
   );

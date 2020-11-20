@@ -1,37 +1,26 @@
 import { useRoom } from './useRoom';
 import { ListClient } from '@roomservice/browser';
 import { useState, useEffect } from 'react';
-import { useLocalPubSub, useSelf } from './contextForSubscriptions';
 
-export function useList<T extends any>(
+export function useList<T extends Array<any>>(
   roomName: string,
   listName: string
-): [ListClient<T> | undefined, (list: ListClient<T>) => any] {
+): [T, ListClient<T> | undefined] {
+  const [obj, setObj] = useState<T>({} as T);
   const [list, setList] = useState<ListClient<T>>();
   const room = useRoom(roomName);
-  const self = useSelf();
-  const local = useLocalPubSub();
-  const key = 'l' + roomName + listName;
 
   useEffect(() => {
     if (!room) return;
 
     const l = room.list<T>(listName);
+    setObj(l.toArray() as any);
     setList(l);
 
     room.subscribe(l, next => {
-      setList(next);
-    });
-
-    local.subscribe(self, key, list => {
-      setList(list);
+      setObj(next);
     });
   }, [room, listName]);
 
-  function setAndBroadcastList(list: ListClient<T>) {
-    setList(list);
-    local.publish(self, key, list);
-  }
-
-  return [list, setAndBroadcastList];
+  return [obj, list];
 }

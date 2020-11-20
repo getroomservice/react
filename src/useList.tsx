@@ -22,5 +22,5 @@ export function useList<T extends Array<any>>(
     });
   }, [room, listName]);
 
-  return [obj, list];
+  return [obj || [], list];
 }

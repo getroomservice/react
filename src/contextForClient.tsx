@@ -12,12 +12,12 @@ interface ClientContext {
 
 export const clientContext = createContext<ClientContext>({});
 
-export function ClientProvider<T extends object>({
+export function ClientProvider({
   children,
   clientParameters,
 }: {
   children: ReactNode;
-  clientParameters: RoomServiceParameters<T>;
+  clientParameters: RoomServiceParameters<any>;
 }) {
   const rs = new RoomService(clientParameters);
   // ref instead of state here to prevent a double render

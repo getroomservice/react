@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "version": "1.0.0-8",
+=======
+  "version": "2.0.0-1",
+>>>>>>> v2.0.0-1
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

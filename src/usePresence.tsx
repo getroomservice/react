@@ -13,7 +13,7 @@ export function usePresence<T extends any>(
   useEffect(() => {
     if (!room) return;
 
-    const p = room!.presence(key);
+    const p = room!.presence();
     presence.current = p;
 
     // Empty buffer
@@ -22,7 +22,7 @@ export function usePresence<T extends any>(
       buffer.current = undefined;
     }
 
-    p.getAll<T>().then(val => {
+    p.getAll<T>(key).then(val => {
       setVal(val);
     });
 
@@ -42,7 +42,7 @@ export function usePresence<T extends any>(
       buffer.current = value;
       return;
     }
-    presence.current?.set(value);
+    presence.current?.set(key, value);
   }, []);
 
   return [val, set];

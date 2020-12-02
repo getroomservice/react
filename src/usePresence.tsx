@@ -2,10 +2,14 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
 
+export interface PresenceUpdater<T extends any> {
+  set(value: T): any;
+}
+
 export function usePresence<T extends any>(
   roomName: string,
   key: string
-): [{ [key: string]: T }, (value: T) => any] {
+): [{ [key: string]: T }, PresenceUpdater<T>] {
   const presence = useRef<PresenceClient>();
   const [val, setVal] = useState<{ [key: string]: T }>({});
   const room = useRoom(roomName);
@@ -45,5 +49,6 @@ export function usePresence<T extends any>(
     presence.current?.set(key, value);
   }, []);
 
-  return [val, set];
+  //  wrap set method for consistency with Map and List hooks
+  return [val, { set }];
 }

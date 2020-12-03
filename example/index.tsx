@@ -58,12 +58,12 @@ const useInterval = (callback, delay) => {
 };
 
 const PresenceDemo = () => {
-  const [first, setFirst] = usePresence('room', 'positions1');
-  const [second, setSecond] = usePresence('room', 'positions2');
+  const [first, firstClient] = usePresence('room', 'positions1');
+  const [second, secondClient] = usePresence('room', 'positions2');
 
   useInterval(() => {
-    setFirst(new Date().toTimeString());
-    setSecond(new Date().toTimeString());
+    firstClient.set(new Date().toTimeString());
+    secondClient.set(new Date().toTimeString());
   }, 1000);
 
   return (

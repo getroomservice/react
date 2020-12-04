@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
 
+type UpdateFn<T extends any> = (current?: T) => T;
+
 export interface PresenceUpdater<T extends any> {
-  set(value: T): any;
+  set(valueOrUpdateFn: T | UpdateFn<T>): any;
 }
 
 export function usePresence<T extends any>(
@@ -39,8 +41,7 @@ export function usePresence<T extends any>(
   // we connect to the room, this keeps track of that.
   const buffer = useRef<any>(undefined);
 
-  //TODO: batch calls to this function before presence is ready
-  const set = useCallback((value: T) => {
+  const bufferedSet = useCallback((value: T) => {
     // Buffer before the rooom is open
     if (!presence.current) {
       buffer.current = value;
@@ -48,6 +49,14 @@ export function usePresence<T extends any>(
     }
     presence.current?.set(key, value);
   }, []);
+
+  const set = (valueOrUpdateFn: T | UpdateFn<T>) => {
+    if (valueOrUpdateFn instanceof Function) {
+      bufferedSet(valueOrUpdateFn(val && room && val[room.me]));
+    } else {
+      bufferedSet(valueOrUpdateFn);
+    }
+  };
 
   //  wrap set method for consistency with Map and List hooks
   return [val, { set }];

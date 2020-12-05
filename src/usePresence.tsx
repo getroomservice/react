@@ -12,14 +12,14 @@ export function usePresence<T extends any>(
   roomName: string,
   key: string
 ): [{ [key: string]: T }, PresenceUpdater<T>] {
-  const presence = useRef<PresenceClient>();
+  const presence = useRef<PresenceClient<T>>();
   const [val, setVal] = useState<{ [key: string]: T }>({});
   const room = useRoom(roomName);
 
   useEffect(() => {
     if (!room) return;
 
-    const p = room!.presence();
+    const p = room!.presence<T>(key);
     presence.current = p;
 
     // Empty buffer
@@ -28,11 +28,9 @@ export function usePresence<T extends any>(
       buffer.current = undefined;
     }
 
-    p.getAll<T>(key).then(val => {
-      setVal(val);
-    });
+    setVal(p.getAll());
 
-    room!.subscribe<T>(p, key, val => {
+    room!.subscribe<T>(p, val => {
       setVal(val);
     });
   }, [room, key]);
@@ -47,12 +45,12 @@ export function usePresence<T extends any>(
       buffer.current = value;
       return;
     }
-    presence.current?.set(key, value);
+    presence.current?.set(value);
   }, []);
 
   const set = (valueOrUpdateFn: T | UpdateFn<T>) => {
     if (valueOrUpdateFn instanceof Function) {
-      bufferedSet(valueOrUpdateFn(val && room && val[room.me]));
+      bufferedSet(valueOrUpdateFn(presence.current?.my()));
     } else {
       bufferedSet(valueOrUpdateFn);
     }

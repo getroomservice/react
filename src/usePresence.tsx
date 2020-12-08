@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
 
@@ -11,7 +11,7 @@ export interface PresenceUpdater<T extends any> {
 export function usePresence<T extends any>(
   roomName: string,
   key: string
-): [{ [key: string]: T }, PresenceUpdater<T>] {
+): [{ [key: string]: T }, PresenceClient<T>?] {
   const presence = useRef<PresenceClient<T>>();
   const [val, setVal] = useState<{ [key: string]: T }>({});
   const room = useRoom(roomName);
@@ -22,12 +22,6 @@ export function usePresence<T extends any>(
     const p = room!.presence<T>(key);
     presence.current = p;
 
-    // Empty buffer
-    if (buffer.current !== undefined) {
-      set(buffer.current);
-      buffer.current = undefined;
-    }
-
     setVal(p.getAll());
 
     room!.subscribe<T>(p, val => {
@@ -35,27 +29,5 @@ export function usePresence<T extends any>(
     });
   }, [room, key]);
 
-  // a programmer can technically write to the presence key before
-  // we connect to the room, this keeps track of that.
-  const buffer = useRef<any>(undefined);
-
-  const bufferedSet = useCallback((value: T) => {
-    // Buffer before the rooom is open
-    if (!presence.current) {
-      buffer.current = value;
-      return;
-    }
-    presence.current?.set(value);
-  }, []);
-
-  const set = (valueOrUpdateFn: T | UpdateFn<T>) => {
-    if (valueOrUpdateFn instanceof Function) {
-      bufferedSet(valueOrUpdateFn(presence.current?.my()));
-    } else {
-      bufferedSet(valueOrUpdateFn);
-    }
-  };
-
-  //  wrap set method for consistency with Map and List hooks
-  return [val, { set }];
+  return [val, presence.current];
 }

@@ -2,37 +2,35 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
 
-type UpdateFn<T extends any> = (current?: T) => T;
-
-export interface PresenceUpdater<T extends any> {
-  set(valueOrUpdateFn: T | UpdateFn<T>): any;
+export interface PresenceWrapper<T extends any> {
+  getMine(): T | undefined;
+  getAll(): { [key: string]: T };
+  set(value: T): any;
 }
 
 export function usePresence<T extends any>(
   roomName: string,
   key: string
-): [{ [key: string]: T }, PresenceUpdater<T>] {
-  const presence = useRef<PresenceClient>();
+): [{ [key: string]: T }, PresenceWrapper<T>] {
+  const presence = useRef<PresenceClient<T>>();
   const [val, setVal] = useState<{ [key: string]: T }>({});
   const room = useRoom(roomName);
 
   useEffect(() => {
     if (!room) return;
 
-    const p = room!.presence();
+    const p = room!.presence<T>(key);
     presence.current = p;
 
     // Empty buffer
     if (buffer.current !== undefined) {
-      set(buffer.current);
+      presence.current.set(buffer.current);
       buffer.current = undefined;
     }
 
-    p.getAll<T>(key).then(val => {
-      setVal(val);
-    });
+    setVal(p.getAll());
 
-    room!.subscribe<T>(p, key, val => {
+    room!.subscribe<T>(p, val => {
       setVal(val);
     });
   }, [room, key]);
@@ -47,17 +45,20 @@ export function usePresence<T extends any>(
       buffer.current = value;
       return;
     }
-    presence.current?.set(key, value);
+    presence.current?.set(value);
   }, []);
 
-  const set = (valueOrUpdateFn: T | UpdateFn<T>) => {
-    if (valueOrUpdateFn instanceof Function) {
-      bufferedSet(valueOrUpdateFn(val && room && val[room.me]));
-    } else {
-      bufferedSet(valueOrUpdateFn);
-    }
-  };
-
   //  wrap set method for consistency with Map and List hooks
-  return [val, { set }];
+  return [
+    val,
+    {
+      set: bufferedSet,
+      getMine: () => {
+        return presence.current?.getMine();
+      },
+      getAll: () => {
+        return presence.current?.getAll() ?? {};
+      },
+    },
+  ];
 }

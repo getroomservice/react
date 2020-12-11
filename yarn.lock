@@ -1139,18 +1139,18 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@roomservice/browser@3.0.0-6":
-  version "3.0.0-6"
-  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-3.0.0-6.tgz#9153777d4779d5c80c2970be5a05b56574e2f817"
-  integrity sha512-2VF0Bxgfih267B6kxC1NI1aaynPPmbfhjdU86bHEth/yIKNmCC+NI0A8IODD/KdpBu8LL8IhMAGm0lxhFNuOUg==
+"@roomservice/browser@3.0.0-11":
+  version "3.0.0-11"
+  resolved "https://registry.yarnpkg.com/@roomservice/browser/-/browser-3.0.0-11.tgz#4f990c16c4784927910ab1edc8e808ff053fc237"
+  integrity sha512-45vjrdxTuY7dG/lSve7FsFuM2dyxA/63nIMu/GBYGtUOMlmuL3oj1jO4IKn/eKPbX3SBaulvIdjjWKImNJG5Tg==
   dependencies:
-    "@roomservice/core" "0.2.1"
+    "@roomservice/core" "0.3.1"
     tiny-invariant "^1.1.0"
 
-"@roomservice/core@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@roomservice/core/-/core-0.2.1.tgz#c54d82f53519234fa8534ab322ad6b0c93a85eb8"
-  integrity sha512-bQ9TCBEAYpeWoPF+uGgnXHwd0j07p9EJL1lp+snLacUrx+S91lzqKpY0fUTfmAyJhv6VnffaHKs4X+q3o6jAvw==
+"@roomservice/core@0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@roomservice/core/-/core-0.3.1.tgz#9f8fc93b70b94e823d2958a4dd56cbfcc7974a3d"
+  integrity sha512-X+kmnuoO5c5NjdZ/rBfY7zdHOd7SOsuR1pFq+p5WdCoVe3EIUXmPk09AGghlfO35ALrl7gua00uWrBBqSKzkbQ==
   dependencies:
     tiny-invariant "^1.1.0"
 

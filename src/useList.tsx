@@ -17,9 +17,11 @@ export function useList<T extends Array<any>>(
     setObj(l.toArray() as any);
     setList(l);
 
-    room.subscribe(l, next => {
+    const subscription = room.subscribe(l, next => {
       setObj(next);
     });
+
+    return () => room.unsubscribe(subscription);
   }, [room, listName]);
 
   return [obj || [], list];

@@ -19,9 +19,11 @@ export function useMap<T extends MapObject>(
     setObj(m.toObject() as any);
     setMap(m);
 
-    room!.subscribe(m, obj => {
+    const subscription = room.subscribe(m, obj => {
       setObj(obj);
     });
+
+    return () => room.unsubscribe(subscription);
   }, [room, mapName]);
 
   return [obj, map];

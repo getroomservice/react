@@ -30,9 +30,11 @@ export function usePresence<T extends any>(
 
     setVal(p.getAll());
 
-    room!.subscribe<T>(p, val => {
+    const subscription = room!.subscribe<T>(p, val => {
       setVal(val);
     });
+
+    return () => room!.unsubscribe(subscription);
   }, [room, key]);
 
   // a programmer can technically write to the presence key before

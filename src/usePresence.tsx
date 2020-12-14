@@ -41,7 +41,7 @@ export function usePresence<T extends any>(
       buffer.current = [value, expiresAfter];
       return;
     }
-    presence.current?.set(value);
+    presence.current?.set(value, expiresAfter);
   }, []);
 
   return [

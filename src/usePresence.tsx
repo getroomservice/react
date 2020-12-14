@@ -2,16 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { PresenceClient } from '@roomservice/browser';
 import { useRoom } from './useRoom';
 
-export interface PresenceWrapper<T extends any> {
-  getMine(): T | undefined;
-  getAll(): { [key: string]: T };
-  set(value: T): any;
-}
-
 export function usePresence<T extends any>(
   roomName: string,
   key: string
-): [{ [key: string]: T }, PresenceWrapper<T>] {
+): [{ [key: string]: T }, PresenceClient<T>] {
   const presence = useRef<PresenceClient<T>>();
   const [val, setVal] = useState<{ [key: string]: T }>({});
   const room = useRoom(roomName);
@@ -24,7 +18,7 @@ export function usePresence<T extends any>(
 
     // Empty buffer
     if (buffer.current !== undefined) {
-      presence.current.set(buffer.current);
+      presence.current.set(buffer.current[0], buffer.current[1]);
       buffer.current = undefined;
     }
 
@@ -39,12 +33,12 @@ export function usePresence<T extends any>(
 
   // a programmer can technically write to the presence key before
   // we connect to the room, this keeps track of that.
-  const buffer = useRef<any>(undefined);
+  const buffer = useRef<[T, number?] | undefined>(undefined);
 
-  const bufferedSet = useCallback((value: T) => {
+  const bufferedSet = useCallback((value: T, expiresAt?: number): any => {
     // Buffer before the rooom is open
     if (!presence.current) {
-      buffer.current = value;
+      buffer.current = [value, expiresAt];
       return;
     }
     presence.current?.set(value);

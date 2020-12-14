@@ -35,16 +35,15 @@ export function usePresence<T extends any>(
   // we connect to the room, this keeps track of that.
   const buffer = useRef<[T, number?] | undefined>(undefined);
 
-  const bufferedSet = useCallback((value: T, expiresAt?: number): any => {
-    // Buffer before the rooom is open
+  const bufferedSet = useCallback((value: T, expiresAfter?: number): any => {
+    // Buffer before the room is open
     if (!presence.current) {
-      buffer.current = [value, expiresAt];
+      buffer.current = [value, expiresAfter];
       return;
     }
     presence.current?.set(value);
   }, []);
 
-  //  wrap set method for consistency with Map and List hooks
   return [
     val,
     {

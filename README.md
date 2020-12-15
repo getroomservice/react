@@ -6,8 +6,7 @@
   <br>
 </h1>
 
-This is the official React client for [Room Service](https://www.roomservice.dev/). It's currently an experimental
-client. It's functional, but it's API is not considered stable at the current moment.
+This is the official React client for [Room Service](https://www.roomservice.dev/). Check out the [Documentation](https://www.roomservice.dev/docs/react-getting-started) for help getting started. Also join our official [Room Service Discord](https://discord.com/invite/VdPpp7Mx9u)!
 
 ## Install 
 

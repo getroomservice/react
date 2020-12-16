@@ -44,16 +44,16 @@ export function usePresence<T extends any>(
     presence.current?.set(value, expiresAfter);
   }, []);
 
-  return [
-    val,
-    {
-      set: bufferedSet,
-      getMine: () => {
-        return presence.current?.getMine();
-      },
-      getAll: () => {
-        return presence.current?.getAll() ?? {};
-      },
+  //  useState here so object stays the same, preventing spurious re-renders
+  const wrapper = useRef<PresenceClient<T>>({
+    set: bufferedSet,
+    getMine: () => {
+      return presence.current?.getMine();
     },
-  ];
+    getAll: () => {
+      return presence.current?.getAll() ?? {};
+    },
+  });
+
+  return [val, wrapper.current];
 }
